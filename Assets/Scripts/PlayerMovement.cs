@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     Rigidbody2D myRB;
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpForce;
@@ -24,5 +23,10 @@ public class PlayerMovement : MonoBehaviour
         {
             myRB.velocity = new Vector2(myRB.velocity.x, jumpForce);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        myRB.velocity = new Vector2 (direction * playerSpeed, myRB.velocity.y);
     }
 }
