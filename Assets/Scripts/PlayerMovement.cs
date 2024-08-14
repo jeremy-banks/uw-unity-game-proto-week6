@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpForce;
     float direction;
+    bool isFacingRight = true;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        FlipPlayerSprite();
+
         direction = Input.GetAxisRaw("Horizontal");
         if ( Input.GetKeyDown(KeyCode.Space))
         {
@@ -25,8 +28,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         myRB.velocity = new Vector2 (direction * playerSpeed, myRB.velocity.y);
+    }
+
+    void FlipPlayerSprite()
+    {
+        if (isFacingRight && direction < 0f || !isFacingRight && direction > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 playerScale = transform.localScale;
+            playerScale.x *= -1;
+            transform.localScale = playerScale;
+        }
     }
 }
